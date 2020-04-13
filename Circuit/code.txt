@@ -1,0 +1,201 @@
+
+const int buttonPin1 = 4;       // pushbutton pin
+const int buttonPin2 =7;       // pushbutton pin
+const int buttonPin3 =8; 
+const int buttonPin4 =12;
+int inc = 0;                   // value for increment for push button 1 and 3 for players to pick which tile.
+const int t = 300; //button press delay // time delay parameter
+char ary[10] = {""}; // board itself
+//constants to play the game
+const char a = 'X';
+const char b = 'O';
+
+
+// increment funtion to pick a tile
+int increment( int& inc)
+{
+
+inc = inc + 1;
+
+return inc;
+  
+}
+// board display function to display board 
+void displaya(){
+   Serial.println("\n============");
+  Serial.print("[");Serial.print(ary[1]);Serial.print("]");
+  Serial.print("[");Serial.print(ary[2]);Serial.print("]");
+  Serial.print("[");Serial.print(ary[3]);Serial.print("]"); Serial.print("\n");
+    Serial.print("[");Serial.print(ary[4]);Serial.print("]");
+  Serial.print("[");Serial.print(ary[5]);Serial.print("]");
+  Serial.print("[");Serial.print(ary[6]);Serial.print("]"); Serial.print("\n");
+    Serial.print("[");Serial.print(ary[7]);Serial.print("]");
+  Serial.print("[");Serial.print(ary[8]);Serial.print("]");
+  Serial.print("[");Serial.print(ary[9]);Serial.print("]"); Serial.print("\n");
+    Serial.println("============\n");
+}
+// board display function to display first board with instructions such as which player is x or o and which tile is which number
+void displayb(){
+   Serial.println("============");
+   Serial.println("TIC TAC TOE");
+  Serial.println("[1] [2] [3]");
+  Serial.println("[4] [5] [6]");
+  Serial.println("[7] [8] [9]");
+  Serial.println("TIC TAC TOE");
+  Serial.println("Player1(x)");
+  Serial.println("Player2(0)");
+  Serial.println("=============");
+}
+//winner for player one if else statements for horizontal , vertical and diagonal winner patterns
+void win1()
+{
+if(ary[1]== 'X' && ary[2]== 'X' && ary[3]== 'X')
+  {
+    Serial.print("\nPlayer1 is winner!");
+  }
+  if (ary[4]== 'X' && ary[5]== 'X' && ary[6]== 'X')
+  {
+    Serial.print("\nPlayer1 is winner!");
+  }
+  if (ary[7]== 'X' && ary[8]== 'X' && ary[9]== 'X')
+   {
+    Serial.print("\nPlayer1 is winner!");
+  }
+  if (ary[1]== 'X' && ary[4]== 'X' && ary[7]== 'X')
+  {
+    Serial.print("\nPlayer1 is winner!");
+  }
+  if (ary[2]== 'X' && ary[5]== 'X' && ary[8]== 'X')
+  {
+    Serial.print("\nPlayer1 is winner!");
+  }
+  if (ary[3]== 'X' && ary[6]== 'X' && ary[9]== 'X')
+  {
+    Serial.print("\nPlayer1 is winner!");
+  }
+  if (ary[1]== 'X' && ary[5]== 'X' && ary[9]== 'X')
+  {
+    Serial.print("\nPlayer1 is winner!");
+  }
+  if (ary[3]== 'X' && ary[5]== 'X' && ary[7]== 'X')
+  {
+    Serial.print("\nPlayer1 is winner!");
+  }
+
+}
+/////////////////////////////////////////
+//winner for player 2 if else statements for horizontal , vertical and diagonal winner patterns
+void win2()
+{
+if(ary[1]== 'O' && ary[2]== 'O' && ary[3]== 'O')
+  {
+    Serial.print("\nPlayer2 is winner!");
+  }
+  if (ary[4]== 'O' && ary[5]== 'O' && ary[6]== 'O')
+  {
+    Serial.print("\nPlayer2 is winner!");
+  }
+  if (ary[7]== 'O' && ary[8]== 'O' && ary[9]== 'O')
+   {
+    Serial.print("\nPlayer2 is winner!");
+  }
+  if (ary[1]== 'O' && ary[4]== 'O' && ary[7]== 'O')
+  {
+    Serial.print("\nPlayer2 is winner!");
+  }
+  if (ary[2]== 'O' && ary[5]== 'O' && ary[8]== 'O')
+  {
+    Serial.print("\nPlayer2 is winner!");
+  }
+  if (ary[3]== 'O' && ary[6]== 'O' && ary[9]== 'O')
+  {
+    Serial.print("\nPlayer2 is winner!");
+  }
+  if (ary[1]== 'O' && ary[5]== 'O' && ary[9]== 'O')
+  {
+    Serial.print("\nPlayer2 is winner!");
+  }
+  if (ary[3]== 'O' && ary[5]== 'O' && ary[7]== 'O')
+  {
+    Serial.print("\nPlayer2 is winner!");
+  }
+
+}
+// basic setup to start the game
+void setup() {
+  // initialize digital pin LED_BUILTIN as an output.
+  pinMode(buttonPin1, INPUT);
+  pinMode(buttonPin2, INPUT);
+    pinMode(buttonPin3, INPUT);
+  pinMode(buttonPin4, INPUT);
+  Serial.begin(9600);
+displayb();
+Serial.println("Player1 enter a number");
+}
+
+
+
+// the loop function runs over and over again forever
+//////////////////////////////////////////////////////////////////////button pin 1
+void loop() {
+  if (digitalRead(buttonPin1) == LOW) // button 1 and 3 have the same fuction except for differnt players
+  {     
+    
+   Serial.print("P: ");// to pick which tile.
+   increment(inc); // transversing through tiles
+   if(inc == 10)
+   {
+    inc = 1;
+   }
+   Serial.print(inc);
+   
+   Serial.print(" ");
+    delay(300);
+  }
+
+  ////////////////////////////////////////////button pin 2
+  if (digitalRead(buttonPin2) == LOW) // button 2 and four have the same function except for different players
+  {     
+    // if it is, count a press
+   Serial.print("\nselected: ");// shows which tile was selected
+   Serial.println(inc);
+   ary[inc]= a;// changes tile to ) or X for withe player button 2 changes it to X and four to O
+    delay(1000);
+    displaya();// displays new board with player inputs
+    inc = 0;// initializes the incrementer
+     Serial.print("\nPlayer2 enter a number\n");// changes control to player 2 or player on for button 4
+     win1();// prints winner for either player if patterns  are met
+ 
+  }
+////////////////////////////////////////////button pin 3
+ if (digitalRead(buttonPin3) == LOW) 
+  {     
+    
+   Serial.print("P: ");
+   increment(inc);
+   if(inc == 10)
+   {
+    inc = 1;
+   }
+   Serial.print(inc);
+   
+   Serial.print(" ");
+    delay(300);
+  }
+/////////////////////////////////////////////button pin4
+
+  if (digitalRead(buttonPin4) == LOW) 
+  {     
+    // if it is, count a press
+   Serial.print("\nselected: ");
+   Serial.println(inc);
+   ary[inc]= b;
+    delay(1000);
+    displaya();
+    inc = 0;
+    Serial.println("\nPlayer1 enter a number\n");
+    win2();
+  }  
+
+ 
+}
